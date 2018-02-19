@@ -1,3 +1,4 @@
 export const colors = {
-    white: '#ffffff'
+    white: '#ffffff',
+    btnColor: '#F5AB35'
 }

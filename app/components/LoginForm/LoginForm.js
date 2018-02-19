@@ -14,31 +14,53 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import style from './styles'
 
 
-class LoginField extends Component {
+export default class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+
+    this.state = {
+      email: '',
+      emailError: '',
+      password: '',
+      passwordError: '',
+      emailPlaceholder: 'Email'
+    }
+
+     this.onEmailChange = this.onEmailChange.bind(this);
   }
 
-  render() {
-    return (
-      <TextInput
-        style = {style.loginField}
-        placeholder = {this.props.name}
-        onChangeText = {(text) => this.setState({text})}
-        value = {this.state.text}
-      />
-    );
+  validateEmail(email){
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
-}
+       
+  onEmailChange(e) {
+    var val = e;
+    var valid = this.validateEmail(val);
+    this.setState({email: val, isValid: valid});
+  }
 
-export default class LoginForm extends Component {
   render() {
     return (
       <View style={{alignItems: 'center'}}>
-        <LoginField name='email' />
-        <LoginField name='password' />
-        <Button title='Sign In' buttonStyle={style.button} />
+        <TextInput
+          style = {style.loginField}
+          keyboardType='email-address'
+          placeholder ={this.state.emailPlaceholder}
+          onChangeText={this.onEmailChange}
+          value = {this.state.email}
+          onBlur={() => {
+            if (!this.state.isValid) this.setState({email: '', emailPlaceholder: 'Incorrect Password!'})
+          }}
+        />
+        <TextInput
+          style = {style.loginField}
+          placeholder = 'Password'
+          onChangeText = {value => this.setState({password: value.trim()})}
+          value = {this.state.password}
+          password='true'
+        />
+      <Button title='Sign In' buttonStyle={style.button} />
       </View>
     );
   }

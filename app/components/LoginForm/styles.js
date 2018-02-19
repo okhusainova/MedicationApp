@@ -15,12 +15,11 @@ export default StyleSheet.create({
 	  },
 
 	button: {
-		backgroundColor: "#F5AB35",
+		backgroundColor: colors.btnColor,
       	width: 300,
       	height: 45,
       	borderColor: "transparent",
       	borderWidth: 0,
-      	marginTop: 50,
-      	borderRadius: 17
+      	marginTop: 40
 	}  
 })
