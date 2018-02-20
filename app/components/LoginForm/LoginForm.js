@@ -40,6 +40,29 @@ export default class LoginForm extends Component {
     this.setState({email: val, isValid: valid});
   }
 
+  login() {
+    let data = {
+      email: this.state.email,
+      password: this.state.password
+    }
+
+    fetch('https://mywebsite.com/endpoint/', {  
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({data})
+    })
+    .then(function(response){ 
+      console.log(response)
+     return response.json();   
+    })
+    .then(function(data){ 
+      console.log(data)
+    });
+  }
+
   render() {
     return (
       <View style={{alignItems: 'center'}}>
@@ -60,7 +83,7 @@ export default class LoginForm extends Component {
           value = {this.state.password}
           password='true'
         />
-      <Button title='Sign In' buttonStyle={style.button} />
+      <Button title='Sign In' buttonStyle={style.button} onPress={this.login.bind(this)}/>
       </View>
     );
   }
